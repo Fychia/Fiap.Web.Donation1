@@ -1,0 +1,49 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>Meus produtos</h1>
+
+@if (!String.IsNullOrEmpty((String)TempData["Message"]))
+{
+    @*<div class="alert alert-warning" role="alert">@ViewBag.Message</div>*@
+    <div class="alert alert-warning" role="alert">@TempData["Message"]</div>
+    
+}
+
+
+<p class="toolbar">
+    <a href="/Product/NewProduct"class="create btn btn-dark">Novo produto</a>
+</p>
+
+<table class="table table-striped" border="1" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+            <th data-field="ProductID">Id</th>
+            <th data-field="ProductName">Nome</th>
+            <th data-field="ProductType">Tipo</th>
+            <th data-field="ProductAvailable">Disponível</th>
+            <th data-field="ExpirationDate">Expiração</th>
+            <th class="actions" width="220">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var products in ViewBag.Product){
+        @*@foreach (var products in (List<ModelProduct>)TempData["Product"]){*@
+            <tr>
+                <td data-field="id">@products.ProductID</td>
+                <td data-field="name">@products.ProductName</td>
+                <td data-field="tipo">@products.ProductType</td>
+                <td data-field="disponivel">@products.ProductAvailable</td>
+                <td data-field="disponivel">@products.ExpirationDate</td>
+                <td class="actions" width="220">
+                    <a href="/Product/Details/@products.ProductID">Detalhe</a>
+                    <a href="/Product/Edit/@products.ProductID">Editar</a>
+                    <a href="/Product/Remove/@products.ProductID">Remover</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -13,6 +13,16 @@ public class ContactController : Controller
     [HttpPost]
     public IActionResult Record(ModelContact modelContact)
     {
+        string message = string.Empty;
+
+        if (modelContact.Email.Equals("rafael.valerio@outlook.com.br"))
+        {
+            message = "Contato do usuário" + modelContact + "não registrado";
+        } else
+            message = "Contato registrado com sucesso";
+
+        ViewBag.Message = message;
+
         return View("Sucess");
     }
 
