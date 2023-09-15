@@ -6,7 +6,6 @@ namespace Fiap.Web.Donation1.Controllers
     public class ProductController : Controller
     {
         private List<ModelProduct> products;
-
         public ProductController()
         {
             products = new List<ModelProduct>{
@@ -44,35 +43,66 @@ namespace Fiap.Web.Donation1.Controllers
                     ExpirationDate = DateTime.Now,
                 },
             };
-
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-
-            ViewBag.Product = products;
+            //ViewBag.Product = products;
             //TempData["Product"] = products;
-            return View();
+
+            return View(products);
         }
 
         [HttpGet]
         public IActionResult NewProduct()
         {
-            return View();
+            return View(new ModelProduct());
         }
 
         [HttpPost]
-        public IActionResult SubmitProduct(ModelProduct modelProduct)
+        public IActionResult NewProduct(ModelProduct modelProduct)
         {
             //ViewBag.Message = $"Produto registrado com sucesso";
             //ViewBag.Products = products;
             //return View("Index");
+            if (string.IsNullOrEmpty(modelProduct.ProductName))
+            {
+                ViewBag.Message = "O campo nome é requerido";
+                return View(modelProduct);
+            }
+            else
+            {
+                TempData["Message"] = "Produto registrado com sucesso";
 
-            TempData["Message"] = $"Produto registrado com sucesso";
-            
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
         }
 
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var product = products[id - 1];
+
+            //ViewBag.Product = product;
+
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ModelProduct modelProduct)
+        {
+            if (string.IsNullOrEmpty(modelProduct.ProductName))
+            {
+                ViewBag.Message = "O campo nome é requerido";
+                return View(modelProduct);
+            }else
+            {
+                TempData["Message"] = "Produto Editado com sucesso";
+
+                return RedirectToAction("Index");
+            }
+        }
     }
 }

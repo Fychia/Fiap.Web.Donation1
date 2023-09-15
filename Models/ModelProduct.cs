@@ -1,4 +1,6 @@
-﻿namespace Fiap.Web.Donation1.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Fiap.Web.Donation1.Models;
 
 public class ModelProduct
 {

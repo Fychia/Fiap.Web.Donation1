@@ -3,6 +3,8 @@
 *@
 @{
 }
+@model IList<ModelProduct>
+
 
 <h1>Meus produtos</h1>
 
@@ -30,8 +32,11 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var products in ViewBag.Product){
+        @*@foreach (var products in ViewBag.Product){*@
+
         @*@foreach (var products in (List<ModelProduct>)TempData["Product"]){*@
+        @foreach (var products in Model)
+        {
             <tr>
                 <td data-field="id">@products.ProductID</td>
                 <td data-field="name">@products.ProductName</td>
