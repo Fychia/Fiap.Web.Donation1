@@ -3,7 +3,7 @@
 *@
 @{
 }
-@model ModelProduct 
+@model ModelProduct
 
 <h1>Produto - Novo</h1>
 
@@ -31,12 +31,7 @@
                     </div>
                     <div class="form-group">
                         <label>Tipo:</label>
-                        <select name="ProductType" class="form-control w-75">
-                            <option value="0">Selecione</option>
-                            <option value="1">Celular</option>
-                            <option value="2">Televisor</option>
-                            <option value="1">Eletrodoméstico</option>
-                        </select>
+                        <input type="text" name="ProductTypeID" value="@Model.ProductTypeID" class="form-control w-75" />
                     </div>
                     <div class="form-group">
                         <label>Sugestão de troca:</label>

@@ -12,13 +12,13 @@ public class ModelTypeProduct
 
     //[Column("TypeProductName")]
     [StringLength(200)]
-    public string? TypeProductName { get; set; }
+    public string TypeProductName { get; set; }
 
     //[Column("TypeProductName")]
     [StringLength(256)]
-    public string? TypeProductDescription { get; set; }
+    public string TypeProductDescription { get; set; }
 
     //[Column("TypeProductToken")]
     [NotMapped]
-    public string? TypeProductToken { get; set; }
+    public string TypeProductToken { get; set; }
 }
