@@ -42,7 +42,7 @@ namespace Fiap.Web.Donation1.Migrations
 
                     b.HasKey("TypeProductID");
 
-                    b.ToTable("dbo.TypeProduct");
+                    b.ToTable("TypeProduct");
                 });
 #pragma warning restore 612, 618
         }

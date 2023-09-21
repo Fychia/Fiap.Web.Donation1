@@ -11,11 +11,11 @@ namespace Fiap.Web.Donation1.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropPrimaryKey(
-                name: "PK_dbo.TypeProduct",
-                table: "dbo.TypeProduct");
+                name: "PK_TypeProduct",
+                table: "TypeProduct");
 
             migrationBuilder.RenameTable(
-                name: "dbo.TypeProduct",
+                name: "TypeProduct",
                 newName: "TypeProduct");
 
             migrationBuilder.AddPrimaryKey(

@@ -1,48 +1,54 @@
-﻿using Fiap.Web.Donation1.Models;
+﻿using Fiap.Web.Donation1.Data;
+using Fiap.Web.Donation1.Models;
+using Fiap.Web.Donation1.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.Web.Donation1.Controllers;
 
 public class ProductController : Controller
 {
-    private List<ModelProduct> products;
-    public ProductController()
+    //private List<ModelProduct> products;
+    private readonly ProductRepository productRepository;
+    public ProductController(DataContext dataContext)
     {
-        products = new List<ModelProduct>{
+        productRepository = new ProductRepository(dataContext);
 
-            new ModelProduct()
-            {
-                ProductID = 1,
-                ProductName = "Test",
-                ProductType = 1,
-                ProductAvailable = true,
-                ExpirationDate = DateTime.Now,
-            },
-            new ModelProduct()
-            {
-                ProductID = 2,
-                ProductName = "Test",
-                ProductType = 1,
-                ProductAvailable = true,
-                ExpirationDate = DateTime.Now,
-            },
-            new ModelProduct()
-            {
-                ProductID = 3,
-                ProductName = "Test",
-                ProductType = 1,
-                ProductAvailable = true,
-                ExpirationDate = DateTime.Now,
-            },
-            new ModelProduct()
-            {
-                ProductID = 4,
-                ProductName = "Test",
-                ProductType = 1,
-                ProductAvailable = true,
-                ExpirationDate = DateTime.Now,
-            },
-        };
+        //products = new List<ModelProduct>{
+
+        //    new ModelProduct()
+        //    {
+        //        ProductID = 1,
+        //        ProductName = "Test",
+        //        //ProductType = 1,
+        //        ProductAvailable = true,
+        //        ExpirationDate = DateTime.Now,
+        //    },
+        //    new ModelProduct()
+        //    {
+        //        ProductID = 2,
+        //        ProductName = "Test",
+        //        //ProductType = 1,
+        //        ProductAvailable = true,
+        //        ExpirationDate = DateTime.Now,
+        //    },
+        //    new ModelProduct()
+        //    {
+        //        ProductID = 3,
+        //        ProductName = "Test",
+        //        //ProductType = 1,
+        //        ProductAvailable = true,
+        //        ExpirationDate = DateTime.Now,
+        //    },
+        //    new ModelProduct()
+        //    {
+        //        ProductID = 4,
+        //        ProductName = "Test",
+        //        //ProductType = 1,
+        //        ProductAvailable = true,
+        //        ExpirationDate = DateTime.Now,
+        //    },
+        //};
+
     }
 
     [HttpGet]
@@ -50,6 +56,8 @@ public class ProductController : Controller
     {
         //ViewBag.Product = products;
         //TempData["Product"] = products;
+        var products = productRepository.FindAll();
+
 
         return View(products);
     }
@@ -73,6 +81,9 @@ public class ProductController : Controller
         }
         else
         {
+            modelProduct.UserID = 1;
+            productRepository.Insert(modelProduct);
+            
             TempData["Message"] = "Produto registrado com sucesso";
 
             return RedirectToAction("Index");
@@ -83,8 +94,8 @@ public class ProductController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        var product = products[id - 1];
-
+        //var product = products[id - 1];
+        var product = productRepository.FindById(id);
         //ViewBag.Product = product;
 
         return View(product);
@@ -99,6 +110,9 @@ public class ProductController : Controller
             return View(modelProduct);
         }else
         {
+            modelProduct.ExpirationDate = DateTime.Now;
+            modelProduct.UserID = 1;
+            productRepository.Update(modelProduct);
             TempData["Message"] = "Produto Editado com sucesso";
 
             return RedirectToAction("Index");

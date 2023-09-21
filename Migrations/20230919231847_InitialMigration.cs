@@ -21,7 +21,7 @@ namespace Fiap.Web.Donation1.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_dbo.TypeProduct", x => x.TypeProductID);
+                    table.PrimaryKey("PK_TypeProduct", x => x.TypeProductID);
                 });
         }
 
@@ -29,7 +29,7 @@ namespace Fiap.Web.Donation1.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "dbo.TypeProduct");
+                name: "TypeProduct");
         }
     }
 }
