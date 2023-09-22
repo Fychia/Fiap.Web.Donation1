@@ -2,6 +2,8 @@
 using Fiap.Web.Donation1.Models;
 using Fiap.Web.Donation1.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Drawing.Text;
 
 namespace Fiap.Web.Donation1.Controllers;
 
@@ -9,46 +11,15 @@ public class ProductController : Controller
 {
     //private List<ModelProduct> products;
     private readonly ProductRepository productRepository;
+    private readonly TypeProductRepository typeProductRepository;
+
+    private readonly int UserID = 1;
     public ProductController(DataContext dataContext)
     {
         productRepository = new ProductRepository(dataContext);
+        typeProductRepository = new TypeProductRepository(dataContext);
 
-        //products = new List<ModelProduct>{
-
-        //    new ModelProduct()
-        //    {
-        //        ProductID = 1,
-        //        ProductName = "Test",
-        //        //ProductType = 1,
-        //        ProductAvailable = true,
-        //        ExpirationDate = DateTime.Now,
-        //    },
-        //    new ModelProduct()
-        //    {
-        //        ProductID = 2,
-        //        ProductName = "Test",
-        //        //ProductType = 1,
-        //        ProductAvailable = true,
-        //        ExpirationDate = DateTime.Now,
-        //    },
-        //    new ModelProduct()
-        //    {
-        //        ProductID = 3,
-        //        ProductName = "Test",
-        //        //ProductType = 1,
-        //        ProductAvailable = true,
-        //        ExpirationDate = DateTime.Now,
-        //    },
-        //    new ModelProduct()
-        //    {
-        //        ProductID = 4,
-        //        ProductName = "Test",
-        //        //ProductType = 1,
-        //        ProductAvailable = true,
-        //        ExpirationDate = DateTime.Now,
-        //    },
-        //};
-
+        
     }
 
     [HttpGet]
@@ -56,8 +27,7 @@ public class ProductController : Controller
     {
         //ViewBag.Product = products;
         //TempData["Product"] = products;
-        var products = productRepository.FindAll();
-
+        var products = productRepository.FindAllWithType();
 
         return View(products);
     }
@@ -94,8 +64,10 @@ public class ProductController : Controller
     [HttpGet]
     public IActionResult Edit(int id)
     {
-        //var product = products[id - 1];
+        TypeProductCombo();
+
         var product = productRepository.FindById(id);
+        //var product = products[id - 1];
         //ViewBag.Product = product;
 
         return View(product);
@@ -106,11 +78,12 @@ public class ProductController : Controller
     {
         if (string.IsNullOrEmpty(modelProduct.ProductName))
         {
+            TypeProductCombo();
+
             ViewBag.Message = "O campo nome é requerido";
             return View(modelProduct);
         }else
         {
-            modelProduct.ExpirationDate = DateTime.Now;
             modelProduct.UserID = 1;
             productRepository.Update(modelProduct);
             TempData["Message"] = "Produto Editado com sucesso";
@@ -142,5 +115,14 @@ public class ProductController : Controller
 
             return RedirectToAction("Index");
         }
+    }
+
+    private void TypeProductCombo()
+    {
+        var typeProducts = typeProductRepository.FindAll();
+
+        var typeProductCombo = new SelectList(typeProducts, "TypeProductID", "TypeProductName");
+
+        ViewBag.TypeProduct = typeProductCombo;
     }
 }

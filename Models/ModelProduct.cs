@@ -23,7 +23,7 @@ public class ModelProduct
     public double Value { get; set; }
 
     //[DefaultValue(typeof)]
-    public DateTime RegisterDate { get; set; }
+    public DateTime RegisterDate { get; set; } = DateTime.Now;
     public DateTime ExpirationDate { get; set; }
 
 
